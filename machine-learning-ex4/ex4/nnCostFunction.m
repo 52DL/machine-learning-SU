@@ -69,8 +69,8 @@ end
 in = [ones(m,1) X];
 hidden = [ones(m,1) sigmoid(Theta1*in')'];
 out = sigmoid(Theta2*hidden')';
-size(out)
-size(yv)
+%size(out)
+%size(yv)
 J = sum(sum((-yv.*(log(out))-(1-yv).*log(1-out)),2))/m;
 
 t1=Theta1;
@@ -85,10 +85,14 @@ J = J + re;
 
 
 for i=1:m
-	xi = in(i)';
-	yi = yv(i)';
+%	size(in)
+	xi = in(i,:)';
+%	size(xi)
+	yi = yv(i,:)';
 	a_1 = xi;
+%	size(a_1)
 	z_2 = Theta1 * a_1;
+%	size(z_2)
 	a_2 = [1;sigmoid(z_2)];
 	z_3 = Theta2 * a_2;
 	a_3 = sigmoid(z_3);
@@ -104,6 +108,9 @@ end
 Theta1_grad = Theta1_grad/m;
 Theta2_grad = Theta2_grad/m;
 
+
+Theta1_grad = Theta1_grad + (lambda/m)*t1;
+Theta2_grad = Theta2_grad + (lambda/m)*t2;
 
 % -------------------------------------------------------------
 
